@@ -1,4 +1,12 @@
-import { Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+} from '@nestjs/common';
 
 @Controller('movies') // Entry Point
 export class MoviesController {
@@ -13,7 +21,8 @@ export class MoviesController {
   }
 
   @Post()
-  create(): string {
+  create(@Body() movieData): string {
+    console.log(movieData);
     return 'This will create a movie';
   }
 
@@ -23,7 +32,10 @@ export class MoviesController {
   }
 
   @Patch('/:id')
-  patch(@Param('id') movieId: string): string {
-    return `This will patch a movie with the id: ${movieId}`;
+  patch(@Param('id') movieId: string, @Body() updateData): string {
+    return {
+      updateMovie: movieId,
+      ...updateData,
+    };
   }
 }
