@@ -8,12 +8,16 @@ import {
   Post,
   Query,
 } from '@nestjs/common';
+import { Movie } from './entities/movie.entity';
+import { MoviesService } from './movies.service';
 
 @Controller('movies') // Entry Point
 export class MoviesController {
+  constructor(private readonly moviesService: MoviesService) {}
+
   @Get()
-  getAll(): string {
-    return 'This will return all movies!';
+  getAll(): Movie[] {
+    return this.moviesService.getAll();
   }
 
   // GET /:id Router보다 하위에 위치하면 Unintended Result
@@ -23,8 +27,8 @@ export class MoviesController {
   }
 
   @Get('/:id')
-  getOneMovie(@Param('id') movieId: string): string {
-    return `This will return a movie with the id: ${movieId}`;
+  getOneMovie(@Param('id') movieId: string): Movie {
+    return this.moviesService.getOne(movieId);
   }
 
   @Post()
