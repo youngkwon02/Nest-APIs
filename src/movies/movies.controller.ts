@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 
 @Controller('movies') // Entry Point
@@ -17,8 +18,8 @@ export class MoviesController {
 
   // GET /:id Router보다 하위에 위치하면 Unintended Result
   @Get('/search')
-  search(): string {
-    return 'We are searching a movie title: ';
+  search(@Query('title') movieTitle: string): string {
+    return `We are searching a movie title: ${movieTitle}`;
   }
 
   @Get('/:id')
