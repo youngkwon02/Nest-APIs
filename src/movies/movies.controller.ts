@@ -15,6 +15,12 @@ export class MoviesController {
     return 'This will return all movies!';
   }
 
+  // GET /:id Router보다 하위에 위치하면 Unintended Result
+  @Get('/search')
+  search(): string {
+    return 'We are searching a movie title: ';
+  }
+
   @Get('/:id')
   getOneMovie(@Param('id') movieId: string): string {
     return `This will return a movie with the id: ${movieId}`;
