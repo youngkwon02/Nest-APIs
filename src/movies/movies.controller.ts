@@ -27,19 +27,18 @@ export class MoviesController {
   }
 
   @Get('/:id')
-  getOneMovie(@Param('id') movieId: string): Movie {
+  getOneMovie(@Param('id') movieId: string): Movie[] {
     return this.moviesService.getOne(movieId);
   }
 
   @Post()
-  create(@Body() movieData): string {
-    console.log(movieData);
-    return 'This will create a movie';
+  create(@Body() movieData) {
+    return this.moviesService.create(movieData);
   }
 
   @Delete('/:id')
-  delete(@Param('id') movieId: string): string {
-    return `This will delete a movie with the id: ${movieId}`;
+  delete(@Param('id') movieId: string) {
+    return this.moviesService.deleteOne(movieId);
   }
 
   @Patch('/:id')
