@@ -33,9 +33,6 @@ export class MoviesService {
   update(id: number, updateData) {
     const movie = this.getOne(id);
     this.deleteOne(id);
-    console.log('Update one!');
-    console.log(this.movies);
-    console.log(movie);
     this.movies.push({ ...movie, ...updateData });
   }
 }
