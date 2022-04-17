@@ -10,9 +10,9 @@ export class MoviesService {
     return this.movies;
   }
 
-  getOne(id: number): Movie[] {
-    const movie = this.movies.filter((movie) => movie.id === id);
-    if (!movie.length) {
+  getOne(id: number): Movie {
+    const movie = this.movies.filter((movie) => movie.id === id)[0];
+    if (!movie) {
       throw new NotFoundException(`Movie with ID ${id} not found.`);
     }
     return movie;
@@ -33,6 +33,9 @@ export class MoviesService {
   update(id: number, updateData) {
     const movie = this.getOne(id);
     this.deleteOne(id);
+    console.log('Update one!');
+    console.log(this.movies);
+    console.log(movie);
     this.movies.push({ ...movie, ...updateData });
   }
 }
