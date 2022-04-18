@@ -51,7 +51,7 @@ describe('MoviesService', () => {
   });
 
   describe('deleteOne', () => {
-    it('deletes a movie', () => {
+    it('delete a movie', () => {
       // deleteOne 전에 create된 movie가 필요
       service.create({
         title: 'Test Movie',
@@ -72,6 +72,19 @@ describe('MoviesService', () => {
       } catch (e) {
         expect(e).toBeInstanceOf(NotFoundException);
       }
+    });
+  });
+
+  describe('create', () => {
+    it('create a movie', () => {
+      const beforeCreate = service.getAll().length;
+      service.create({
+        title: 'Test Movie',
+        genres: ['Test'],
+        year: 2000,
+      });
+      const afterCreate = service.getAll().length;
+      expect(afterCreate).toEqual(beforeCreate + 1);
     });
   });
 });
