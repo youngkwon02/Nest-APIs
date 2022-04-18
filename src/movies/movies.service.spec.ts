@@ -1,5 +1,6 @@
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import exp from 'constants';
 import { MoviesService } from './movies.service';
 
 describe('MoviesService', () => {
@@ -43,6 +44,31 @@ describe('MoviesService', () => {
     it('should throw 404 error', () => {
       try {
         service.getOne(9999);
+      } catch (e) {
+        expect(e).toBeInstanceOf(NotFoundException);
+      }
+    });
+  });
+
+  describe('deleteOne', () => {
+    it('deletes a movie', () => {
+      // deleteOne 전에 create된 movie가 필요
+      service.create({
+        title: 'Test Movie',
+        genres: ['Test'],
+        year: 2000,
+      });
+
+      const beforeDelete = service.getAll().length;
+      service.deleteOne(1);
+      const afterDelete = service.getAll().length;
+
+      expect(afterDelete).toEqual(beforeDelete - 1);
+    });
+
+    it('should return 404', () => {
+      try {
+        service.deleteOne(9999);
       } catch (e) {
         expect(e).toBeInstanceOf(NotFoundException);
       }
